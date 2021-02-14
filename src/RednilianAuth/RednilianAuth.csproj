@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://rednilian.github.io/RednilianAuth/</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>Active Directory</PackageTags>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
