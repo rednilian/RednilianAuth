@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>Rednilian</Authors>
+    <Company />
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/rednilian/RednilianAuth.git</RepositoryUrl>
+    <Description>Library for authenticating against Active Directory and Searching Active Directory for results based on Last Name.</Description>
+    <Copyright>2021</Copyright>
+    <PackageProjectUrl>https://rednilian.github.io/RednilianAuth/</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>Active Directory</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
