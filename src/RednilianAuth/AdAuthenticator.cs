@@ -1,13 +1,12 @@
 ﻿using RednilianAuth.Models;
 using System;
-using System.Threading.Tasks;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 
 
 namespace RednilianAuth
 {
-    public class AdAuthenticator
+    public static class AdAuthenticator
     {
 
 
@@ -30,11 +29,19 @@ namespace RednilianAuth
 
 
         #region -----------------   METHODS -----------------------------
+        /// <summary>
+        /// Checks if provided credentials authenticate with LDAP, and returns an 'AdPerson' class object.
+        /// </summary>
+        /// <param name="ldapUrl">Url for LDAP</param>
+        /// <param name="ldapDomain">Domain for LDAP</param>
+        /// <param name="userName">samAccountName</param>
+        /// <param name="password">password</param>
+        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-        public  AdPerson AuthenticateAndAdPerson(string ldapUrl, string ldapDomain, string userName, string password)
+        public  static AdPerson AuthenticateAndGetAdPerson(string ldapUrl, string ldapDomain, string userName, string password)
         {
             AdPerson adPerson = new();
-            var didAuthenticate = IsAuthenticated(ldapUrl, ldapDomain, userName, password);
+            var didAuthenticate = IsAuthenticated(ldapDomain, userName, password);
             if (didAuthenticate is false)
             {
                 return adPerson;
@@ -44,6 +51,7 @@ namespace RednilianAuth
 
             //  Authenticated against ActiveDirectory, so proceed to get name/email, etc.:
             DirectoryEntry dirEntry = new DirectoryEntry(ldapUrl, $"{ldapDomain}\\{userName}", password);
+            
            
             try
             {
@@ -64,6 +72,7 @@ namespace RednilianAuth
                 adPerson.LastName = result.Properties["sn"][0] != null ? Convert.ToString(result.Properties["sn"][0]) : "?";
                 adPerson.DisplayName = result.Properties["sn"][0] != null ? Convert.ToString(result.Properties["DisplayName"][0]) : "?";
                 adPerson.Email = result.Properties["sn"][0] != null ? Convert.ToString(result.Properties["mail"][0]) : "?";
+                
             }
             catch (Exception e)
             {
@@ -78,8 +87,16 @@ namespace RednilianAuth
         }
 
 
+        /// <summary>
+        /// Returns true if provided username/password are PrincipalContext.ValidCredentials
+        /// </summary>
+        /// <param name="ldapUrl">Url for LDAP</param>
+        /// <param name="ldapDomain">Domain for LDAP</param>
+        /// <param name="userName">samAccountName</param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-        public static bool IsAuthenticated(string ldapUrl, string ldapDomain, string userName, string password)
+        public static bool IsAuthenticated(string ldapDomain, string userName, string password)
         {
             try
             {
@@ -90,7 +107,7 @@ namespace RednilianAuth
             }
             catch (Exception e)
             {
-                var error = e.ToString();
+                _ = e.ToString();
                 return false;
             }
         }

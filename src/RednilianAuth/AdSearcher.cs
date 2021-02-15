@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RednilianAuth
 {
@@ -13,10 +11,11 @@ namespace RednilianAuth
     {
 
         /// <summary>
-        /// Get List RednilianAuth.AdPerson from Active Directory matching the provided LastName (surname) argument.
+        /// <para>Get List of RednilianAuth.AdPerson from Active Directory matching the provided LastName (surname) argument.</para>
+        /// <para>Workstation Must be on the domain, otherwise an empty list is returned. </para>
         /// </summary>
-        /// <param name="lastName">Last Name (Surname) of the user.</param>
-        /// <param name="domainName"></param>
+        /// <param name="lastName">Last Name ('sn' Surname) of the user.</param>
+        /// <param name="domainName">Domain Name</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public static List<AdPerson> GetAdUsersbyLastName(string lastName, string domainName)
@@ -44,7 +43,7 @@ namespace RednilianAuth
                         {
                             AdLogin = d.Properties["samAccountName"].Value.ToString(),
                             FirstName = d.Properties["givenName"].Value.ToString(),
-                            LastName = d.Properties["givenName"].Value.ToString(),
+                            LastName = d.Properties["sn"].Value.ToString(),
                             Email = d.Properties["mail"].Value.ToString()
                         });
 
@@ -54,7 +53,6 @@ namespace RednilianAuth
             }
             catch (Exception e) {
                 _ = e.ToString();
-                throw;
             }
             return adPersons.OrderBy(l=>l.LastName).OrderBy(f=>f.FirstName).ToList();
 
