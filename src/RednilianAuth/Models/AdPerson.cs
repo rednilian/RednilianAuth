@@ -5,7 +5,8 @@ using System.Text;
 namespace RednilianAuth.Models
 {
     /// <summary>
-    /// A Class representing a 'Person' with info obtained from Active Directory
+    /// <para>Class representing a 'Person' with info obtained from Active Directory.</para> 
+    /// <para>Contains basic info Properties FirstName, LastName, Email, DisplayName, samAccountName.</para>
     /// </summary>
     public class AdPerson
     {
