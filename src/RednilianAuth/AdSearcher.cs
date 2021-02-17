@@ -21,7 +21,7 @@ namespace RednilianAuth
         public static List<AdPerson> GetAdUsersbyFirstName(string firstName, string domainName)
         {
             List<DirectoryEntry> dirEntries = new List<DirectoryEntry>();
-
+ 
             List<AdPerson> adPersons = new();
             try
             {
